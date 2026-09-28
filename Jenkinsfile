@@ -4,6 +4,7 @@ pipeline {
     environment {
         PYTHON = 'C:\\Users\\Admin\\AppData\\Roaming\\uv\\python\\cpython-3.12.14-windows-x86_64-none\\python.exe'
         VENV_PYTHON = '.venv\\Scripts\\python.exe'
+        DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
     }
 
     stages {
