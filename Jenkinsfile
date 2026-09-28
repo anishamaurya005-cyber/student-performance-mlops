@@ -62,7 +62,12 @@ pipeline {
                 bat '"%VENV_PYTHON%" -m pytest tests/test_api.py'
             }
         }
-    }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t student-performance-api:latest .'
+            }
+        }
 
     post {
         success {
