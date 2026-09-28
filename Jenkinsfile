@@ -68,6 +68,7 @@ pipeline {
                 bat 'docker build -t student-performance-api:latest .'
             }
         }
+    }
 
     post {
         success {
