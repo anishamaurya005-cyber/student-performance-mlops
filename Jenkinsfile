@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         PYTHON = 'C:\\Users\\Admin\\AppData\\Roaming\\uv\\python\\cpython-3.12.14-windows-x86_64-none\\python.exe'
+        VENV_PYTHON = '.venv\\Scripts\\python.exe'
     }
 
     stages {
@@ -13,45 +14,52 @@ pipeline {
             }
         }
 
+        stage('Create Virtual Environment') {
+            steps {
+                bat '"%PYTHON%" -m venv .venv'
+            }
+        }
+
         stage('Check Python') {
             steps {
-                bat '"%PYTHON%" --version'
+                bat '"%VENV_PYTHON%" --version'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat '"%PYTHON%" -m pip install -r requirements.txt'
+                bat '"%VENV_PYTHON%" -m pip install --upgrade pip'
+                bat '"%VENV_PYTHON%" -m pip install -r requirements.txt'
             }
         }
 
         stage('Data Validation') {
             steps {
-                bat '"%PYTHON%" src/data_validation.py'
+                bat '"%VENV_PYTHON%" src/data_validation.py'
             }
         }
 
         stage('Preprocessing') {
             steps {
-                bat '"%PYTHON%" src/data_preprocessing.py'
+                bat '"%VENV_PYTHON%" src/data_preprocessing.py'
             }
         }
 
         stage('Training') {
             steps {
-                bat '"%PYTHON%" src/train.py'
+                bat '"%VENV_PYTHON%" src/train.py'
             }
         }
 
         stage('Evaluation') {
             steps {
-                bat '"%PYTHON%" src/evaluate.py'
+                bat '"%VENV_PYTHON%" src/evaluate.py'
             }
         }
 
         stage('API Tests') {
             steps {
-                bat '"%PYTHON%" -m pytest tests/test_api.py'
+                bat '"%VENV_PYTHON%" -m pytest tests/test_api.py'
             }
         }
     }
