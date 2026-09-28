@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = 'C:\\Users\\Admin\\AppData\\Roaming\\uv\\python\\cpython-3.12.14-windows-x86_64-none\\python.exe'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -9,39 +13,45 @@ pipeline {
             }
         }
 
+        stage('Check Python') {
+            steps {
+                bat '"%PYTHON%" --version'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                bat 'python -m pip install -r requirements.txt'
+                bat '"%PYTHON%" -m pip install -r requirements.txt'
             }
         }
 
         stage('Data Validation') {
             steps {
-                bat 'python src/data_validation.py'
+                bat '"%PYTHON%" src/data_validation.py'
             }
         }
 
         stage('Preprocessing') {
             steps {
-                bat 'python src/data_preprocessing.py'
+                bat '"%PYTHON%" src/data_preprocessing.py'
             }
         }
 
         stage('Training') {
             steps {
-                bat 'python src/train.py'
+                bat '"%PYTHON%" src/train.py'
             }
         }
 
         stage('Evaluation') {
             steps {
-                bat 'python src/evaluate.py'
+                bat '"%PYTHON%" src/evaluate.py'
             }
         }
 
         stage('API Tests') {
             steps {
-                bat 'python -m pytest tests/test_api.py'
+                bat '"%PYTHON%" -m pytest tests/test_api.py'
             }
         }
     }
