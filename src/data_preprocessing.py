@@ -49,12 +49,12 @@ def preprocess_data():
 
     # Identify categorical columns
     categorical_columns = X.select_dtypes(
-        include=["object"]
+        include=["object", "string"]
     ).columns.tolist()
 
     # Identify numerical columns
     numerical_columns = X.select_dtypes(
-        exclude=["object"]
+        exclude=["object", "string"]
     ).columns.tolist()
 
     print("\nCategorical columns:")
@@ -117,7 +117,6 @@ def preprocess_data():
         y_train,
         y_test
     )
-
 
 # -----------------------------
 # Run preprocessing
